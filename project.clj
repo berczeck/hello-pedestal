@@ -8,7 +8,9 @@
                  [io.pedestal/pedestal.route "0.5.7"]
                  [io.pedestal/pedestal.jetty "0.5.7"]
                  [org.slf4j/slf4j-simple "1.7.28"]
-                 [org.clojure/data.json "0.2.6"]]
+                 [org.clojure/data.json "0.2.6"]
+                 [datascript "1.0.0"]
+                 [com.stuartsierra/component "1.0.0"]]
   :main ^:skip-aot hello-pedestal.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
