@@ -3,7 +3,9 @@
            [io.pedestal.http :as http]
            [io.pedestal.http.route :as route]
            [io.pedestal.http.body-params :as body-params]
-           [io.pedestal.http.content-negotiation :as conneg])
+           [io.pedestal.http.content-negotiation :as conneg]
+           [hello-pedestal.system :as system]
+           [com.stuartsierra.component :as component])
   (:gen-class))
 ;,https://stackoverflow.com/questions/36545570/getting-the-post-body-data-from-a-post-request-to-pedestal
 (defn respond-hello
@@ -93,9 +95,13 @@
   (http/create-server service))
 
 (defn start []
-  (http/start (create-server)))
+  ;(http/start (create-server))
+  (component/start
+   (system/new-system {:env :prod :db-uri "datomic:mem://demo-pedestal" :routes routes})))
 
 (defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (start))
+ "I don't do a whole lot ... yet."
+ [& args]
+ (println "Hello, World!")
+ (component/start
+  (system/new-system {:env :prod :db-uri "datomic:mem://pedestal-db"})))
