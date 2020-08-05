@@ -18,6 +18,6 @@
          (:status (test/response-for service :get (url-for :greet-view)))))
   (is (= 200
          (:status (test/response-for service :get (url-for :test-user :path-params {:id "4fe5d828-6444-11e8-8222-720007e40350"})))))
-  (is (= {:status :created :id "4fe5d828-6444-11e8-8222-720007e40350"}
+  (is (= "{:status :created, :id #uuid \"4fe5d828-6444-11e8-8222-720007e40350\"}"
          (:body (test/response-for service :post (url-for :test-create :path-params {:id "4fe5d828-6444-11e8-8222-720007e40350"})
                                            :headers {"Content-Type" "application/json"})))))
