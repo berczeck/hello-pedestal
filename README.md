@@ -31,8 +31,8 @@ pack build hello-pedestal \
 
 NOTE: Replace `<lein-paketo-buildpack-path>`
 
- * Run `docker run -p 8080:8080 hello-pedestal`
- * Hit the endpoint `http ":8080/hello"`
+ * Run `docker run -p 8890:8890 hello-pedestal`
+ * Hit the endpoint `http ":8890/hello"`
 
 ## Options
 

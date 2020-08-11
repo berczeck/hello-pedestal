@@ -9,7 +9,7 @@
   (println "Datomic: start")
    (d/create-database uri)
 	 (let [conn (d/connect uri)
-         schema (load-file "resources/schema.edn")]
+         schema (load-file "schema.edn")]
      (d/transact conn schema)
 		 (assoc this :conn conn)))
 
