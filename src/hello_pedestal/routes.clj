@@ -1,27 +1,9 @@
 (ns hello-pedestal.routes
   (:require [io.pedestal.http.route :as route]
-            [hello-pedestal.data :as data]
+            [hello-pedestal.handler :as handler]
             [clojure.data.json :as json]
-            [io.pedestal.interceptor.error :as error-int]))
-
-(defn respond-hello [request]
-  {:status 200 :body "Hello, world!"})
-
-(defn owner-post [request]
-  {:status 200 :body "owner post!"})
-
-(defn owner-get [{:keys [path-params datomic]}]
-  {:status 200 :body (data/find-pet-owner-id datomic (:name path-params))})
-
-(defn greet-get
-  [{:keys [int-id db]}]
-  {:status 200 :body {:message (str "Greetings!!! " int-id) :conn db}})
-
-(defn error-get
-  [{:keys [int-id db]}]
-  (if (= int-id 1)
-    (throw (ex-info "Not found" {:type :not-found}))
-    {:status 200 :body {:response :ok}}))
+            [io.pedestal.interceptor.error :as error-int]
+            [io.pedestal.http.body-params :as body-params]))
 
 (def db-interceptor
   {:name :database-interceptor
@@ -62,10 +44,10 @@
 
 (def routes
   (route/expand-routes
-    #{["/hello" :get respond-hello :route-name :hello]
-      ["/owners/:name" :post owner-post :route-name :owner-post]
-      ["/owners/:name" :get [db-interceptor owner-get] :route-name :owner-get]
-      ["/greet/:id" :get [service-error-handler db-interceptor path-id->int greet-get] :route-name :greet-get :constraints {:id #"[0-9]+"}]
-      ["/error/:id" :get [service-error-handler json-body path-id->int error-get] :route-name :error-get]}))
+    #{["/hello" :get [json-body handler/respond-hello] :route-name :hello]
+      ["/owners/:name" :post [json-body db-interceptor (body-params/body-params) handler/owner-post] :route-name :owner-post]
+      ["/owners/:name" :get [json-body handler/owner-get] :route-name :owner-get]
+      ["/greet/:id" :get [service-error-handler db-interceptor path-id->int handler/greet-get] :route-name :greet-get :constraints {:id #"[0-9]+"}]
+      ["/error/:id" :get [service-error-handler json-body path-id->int handler/error-get] :route-name :error-get]}))
 
 ;(route/try-routing-for hello/routes :prefix-tree "/greet" :get)

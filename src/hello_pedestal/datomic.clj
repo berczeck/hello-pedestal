@@ -23,4 +23,3 @@
 (defn new-datomic
  [uri]
  (map->Datomic {:uri uri}))
-;datomic:mem://pet-owners-test-db

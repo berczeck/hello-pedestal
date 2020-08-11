@@ -1,10 +1,8 @@
 (ns hello-pedestal.core-test
   (:require [clojure.test :refer :all]
             [hello-pedestal.core :as core]
-            [clojure.data.json :as json]
             [io.pedestal.http :as http]
             [io.pedestal.http.route :as route]
-            [io.pedestal.http.body-params :as body-params]
             [io.pedestal.test :as test]))
 
 (def service
