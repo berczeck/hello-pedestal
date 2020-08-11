@@ -12,6 +12,28 @@ FIXME: explanation
 
     $ java -jar hello-pedestal-0.1.0-standalone.jar [args]
 
+### Build an image
+
+* Clone [eddumelendez/lein-paketo-buildpack](https://github.com/eddumelendez/lein-paketo-buildpack) repository
+* Enter to `lein-paketo-buildpack` and perform `./scripts/build.sh`
+* Install [pack](https://buildpacks.io/docs/install-pack)
+* Perform the following command
+
+```
+pack build hello-pedestal \
+--builder "gcr.io/paketo-buildpacks/builder:base" \
+--buildpack gcr.io/paketo-buildpacks/amazon-corretto \
+--buildpack <lein-paketo-buildpack-path> \
+--buildpack paketo-buildpacks/executable-jar \
+-e 'BP_JVM_VERSION=8.*' \
+-e 'BP_LEIN_BUILT_ARTIFACT=target/uberjar/*-standalone.jar' -v
+```
+
+NOTE: Replace `<lein-paketo-buildpack-path>`
+
+ * Run `docker run -p 8080:8080 hello-pedestal`
+ * Hit the endpoint `http ":8080/hello"`
+
 ## Options
 
 FIXME: listing of options this app accepts.
