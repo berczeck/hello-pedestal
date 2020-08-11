@@ -12,6 +12,7 @@
                  ;[datascript "1.0.0"]
                  [com.datomic/datomic-free "0.9.5697"]
                  [com.stuartsierra/component "1.0.0"]]
+  :resource-paths ["resources"]
   :main ^:skip-aot hello-pedestal.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
